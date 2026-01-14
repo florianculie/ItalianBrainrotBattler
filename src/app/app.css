@@ -1,10 +1,9 @@
-/* ===== Fond général du site ===== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   font-family: "Comic Sans MS", Arial, sans-serif;
-  background-color: #FF0000; /* fond rouge saturé demandé */
+  background-color: #FF0000;
   color: #FFF200;
 }
 
@@ -14,7 +13,6 @@ body {
   min-height: 100%;
 }
 
-/* ===== Container principal ===== */
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -24,7 +22,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ===== Titres ===== */
 h1 {
   font-size: 3em;
   margin-bottom: 20px;
@@ -37,45 +34,41 @@ h1 {
   text-shadow: 2px 2px #FF00FF;
 }
 
-/* ===== Noms des joueurs principaux ===== */
-.player p {
+.player p, .round-form label {
   font-family: 'Impact', 'Comic Sans MS', Arial, sans-serif;
   font-size: 1.5em;
   font-weight: bold;
-  color: #FFEF00; /* jaune vif */
-  text-shadow:
-    2px 2px #FF00FF,
-    -2px 2px #FF00FF,
-    2px -2px #FF00FF,
-    -2px -2px #FF00FF;
+  color: #FFEF00;
+  text-shadow: 2px 2px #FF00FF, -2px 2px #FF00FF, 2px -2px #FF00FF, -2px -2px #FF00FF;
   margin-bottom: 10px;
   animation: bounce 1s ease infinite alternate;
 }
 
-/* ===== Noms des labels Round Input ===== */
-.round-form label {
-  font-family: 'Impact', 'Comic Sans MS', Arial, sans-serif;
-  font-size: 1.3em;
-  font-weight: bold;
-  color: #FFEF00;
-  text-shadow:
-    2px 2px #FF00FF,
-    -2px 2px #FF00FF,
-    2px -2px #FF00FF,
-    -2px -2px #FF00FF;
-  margin-bottom: 5px;
-  display: block;
-  animation: bounce 1s ease infinite alternate;
+.selected-player p {
+  color: #00FFFF;
+  transform: scale(1.15);
+  transition: transform 0.3s, color 0.3s;
 }
 
-/* Animation légère de bounce */
+.selected-player img {
+  box-shadow: 0 0 30px 10px #00FFFF, 0 0 20px #FF00FF inset;
+  transform: scale(1.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1.05); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1.05); }
+}
+
 @keyframes bounce {
   0% { transform: translateY(0); }
   50% { transform: translateY(-5px) scale(1.05); }
   100% { transform: translateY(0); }
 }
 
-/* ===== Joueurs et images ===== */
 .players-status {
   display: flex;
   justify-content: space-between;
@@ -101,7 +94,6 @@ h1 {
   box-shadow: 0 0 20px #FF00FF;
 }
 
-/* ===== Barre de vie ===== */
 .hp-bar-overlay {
   position: absolute;
   bottom: 10px;
@@ -136,7 +128,6 @@ h1 {
   text-shadow: 2px 2px #000;
 }
 
-/* ===== Floating damage ===== */
 .floating-damage {
   position: absolute;
   color: red;
@@ -155,7 +146,6 @@ h1 {
   100% { opacity: 0; transform: translateX(-50%) translateY(-30px) rotate(-5deg); }
 }
 
-/* ===== Round Form Inputs ===== */
 .round-form {
   margin-top: 20px;
   text-align: center;
@@ -178,7 +168,6 @@ h1 {
   text-align: center;
 }
 
-/* ===== Inputs et selects ===== */
 input, select {
   width: 80%;
   padding: 10px;
@@ -191,7 +180,6 @@ input, select {
   box-shadow: 0 0 10px #FF00FF;
 }
 
-/* ===== Boutons ===== */
 button {
   padding: 12px 24px;
   font-size: 1.2em;
@@ -212,7 +200,6 @@ button:hover {
   box-shadow: 0 0 20px #FF00FF;
 }
 
-/* ===== Résultat et historique ===== */
 .result { 
   margin-top: 15px; 
   font-style: italic; 

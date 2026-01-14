@@ -60,14 +60,10 @@ export class App {
   gameStarted = false;
 
   rounds: RoundHistory[] = [];
-  damageEffectPlayer1 = false;
-  damageEffectPlayer2 = false;
-
   floatingDamages: FloatingDamage[] = [];
   floatingId = 0;
 
   constructor() {
-    // Choisir deux personnages aléatoires différents
     const indices = this.getTwoRandomIndices(this.characters.length);
     this.selectedPlayer1 = this.characters[indices[0]];
     this.selectedPlayer2 = this.characters[indices[1]];
@@ -91,68 +87,57 @@ export class App {
     this.player2Number = null;
     this.roundWinner = null;
     this.rounds = [];
-    this.damageEffectPlayer1 = false;
-    this.damageEffectPlayer2 = false;
     this.floatingDamages = [];
     this.floatingId = 0;
     this.gameStarted = true;
   }
 
   playRound(): void {
-  if (
-    this.player1Number === null ||
-    this.player2Number === null ||
-    this.roundWinner === null
-  ) {
-    this.roundResultMessage = 'Please enter both numbers and select the winner.';
-    return;
-  }
-
-  let damage = 0;
-
-  if (this.roundWinner === 'player1') {
-    // Joueur 1 gagne
-    if (this.player2Number! > this.player1Number!) {
-      // Le perdant a un nombre supérieur → aucun dégât
-      damage = 0;
-    } else {
-      // Sinon, le perdant subit la différence
-      damage = this.player1Number! - this.player2Number!;
-      this.player2Hp -= damage;
-      this.player2Hp = Math.max(this.player2Hp, 0);
-      this.damageEffectPlayer2 = true;
-      this.showFloatingDamage('player2', damage);
-      setTimeout(() => (this.damageEffectPlayer2 = false), 500);
+    if (
+      this.player1Number === null ||
+      this.player2Number === null ||
+      this.roundWinner === null
+    ) {
+      this.roundResultMessage = 'Please enter both numbers and select the winner.';
+      return;
     }
-  } else {
-    // Joueur 2 gagne
-    if (this.player1Number! > this.player2Number!) {
-      damage = 0;
+
+    let damage = 0;
+
+    if (this.roundWinner === 'player1') {
+      if (this.player2Number! > this.player1Number!) {
+        damage = 0;
+      } else {
+        damage = this.player1Number! - this.player2Number!;
+        this.player2Hp -= damage;
+        this.player2Hp = Math.max(this.player2Hp, 0);
+        this.showFloatingDamage('player2', damage);
+      }
     } else {
-      damage = this.player2Number! - this.player1Number!;
-      this.player1Hp -= damage;
-      this.player1Hp = Math.max(this.player1Hp, 0);
-      this.damageEffectPlayer1 = true;
-      this.showFloatingDamage('player1', damage);
-      setTimeout(() => (this.damageEffectPlayer1 = false), 500);
+      if (this.player1Number! > this.player2Number!) {
+        damage = 0;
+      } else {
+        damage = this.player2Number! - this.player1Number!;
+        this.player1Hp -= damage;
+        this.player1Hp = Math.max(this.player1Hp, 0);
+        this.showFloatingDamage('player1', damage);
+      }
     }
+
+    this.roundResultMessage = damage > 0
+      ? `Round ${this.roundNumber}: ${this.roundWinner === 'player1' ? this.selectedPlayer2.name : this.selectedPlayer1.name} loses ${damage} HP.`
+      : `Round ${this.roundNumber}: ${this.roundWinner === 'player1' ? this.selectedPlayer2.name : this.selectedPlayer1.name} defends and loses no HP.`;
+
+    this.rounds.unshift({
+      round: this.roundNumber,
+      player1Number: this.player1Number!,
+      player2Number: this.player2Number!,
+      winner: this.roundWinner,
+      damage: damage
+    });
+
+    this.resetRound();
   }
-
-  this.roundResultMessage = damage > 0
-    ? `Round ${this.roundNumber}: ${this.roundWinner === 'player1' ? this.selectedPlayer2.name : this.selectedPlayer1.name} loses ${damage} HP.`
-    : `Round ${this.roundNumber}: ${this.roundWinner === 'player1' ? this.selectedPlayer2.name : this.selectedPlayer1.name} defends and loses no HP.`;
-
-  this.rounds.unshift({
-    round: this.roundNumber,
-    player1Number: this.player1Number!,
-    player2Number: this.player2Number!,
-    winner: this.roundWinner,
-    damage: damage
-  });
-
-  this.resetRound();
-}
-
 
   resetRound(): void {
     this.player1Number = null;

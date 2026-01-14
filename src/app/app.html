@@ -2,7 +2,7 @@
   <h1>{{ title }}</h1>
 
   <div *ngIf="!gameStarted" class="hp-selection">
-    <h2>Starting HP: </h2>
+    <h2>Starting HP:</h2>
     <select [(ngModel)]="selectedHp">
       <option *ngFor="let hp of possibleHpValues" [value]="hp">{{ hp }}</option>
     </select>
@@ -12,7 +12,9 @@
   <div *ngIf="gameStarted">
     <div class="players-status">
       <!-- Player 1 -->
-      <div class="player player-left">
+      <div class="player player-left" 
+           (click)="roundWinner='player1'" 
+           [class.selected-player]="roundWinner==='player1'">
         <p>{{ selectedPlayer1.name }}</p>
         <div class="player-container">
           <img [src]="selectedPlayer1.image" alt="{{ selectedPlayer1.name }}" />
@@ -27,7 +29,9 @@
       </div>
 
       <!-- Player 2 -->
-      <div class="player player-right">
+      <div class="player player-right" 
+           (click)="roundWinner='player2'" 
+           [class.selected-player]="roundWinner==='player2'">
         <p>{{ selectedPlayer2.name }}</p>
         <div class="player-container">
           <img [src]="selectedPlayer2.image" alt="{{ selectedPlayer2.name }}" />
@@ -42,7 +46,6 @@
       </div>
     </div>
 
-    <!-- Round input -->
     <div *ngIf="!isGameOver()" class="round-form">
       <h2>Round Input</h2>
       <div class="round-inputs">
@@ -52,11 +55,7 @@
         </div>
 
         <div class="round-winner">
-          <label>Winner</label>
-          <select [(ngModel)]="roundWinner">
-            <option [value]="'player1'">{{ selectedPlayer1.name }}</option>
-            <option [value]="'player2'">{{ selectedPlayer2.name }}</option>
-          </select>
+          <label>Winner (click a player above)</label>
         </div>
 
         <div class="player-number">
@@ -85,7 +84,7 @@
     <div *ngIf="isGameOver()" class="game-over">
       <h2>Game Over</h2>
       <p>{{ getWinner() }}</p>
-      <button (click)="gameStarted = false">Restart Game</button>
+      <button (click)="gameStarted=false">Restart Game</button>
     </div>
   </div>
 </div>
