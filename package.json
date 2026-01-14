@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ItalianBrairotBattler": "node dist/ItalianBrairotBattler/server/server.mjs"
+    "serve:ssr:ItalianBrairotBattler": "node dist/ItalianBrairotBattler/server/server.mjs",
+    "build:ci": "ng build --base-href https://florianculie.github.io/italianbrainrotbattler/"
   },
   "prettier": {
     "printWidth": 100,
