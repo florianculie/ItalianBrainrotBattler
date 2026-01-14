@@ -29,10 +29,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-      - name : Generate Git Log
-        shell: pwsh        
-        run: | 
-          .\.github\scripts\GitLogToJson.ps1
       - name: Build
         run: |
           cd  wisdom
